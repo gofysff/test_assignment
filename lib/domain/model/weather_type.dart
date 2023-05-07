@@ -9,7 +9,7 @@ enum WeatherType {
   unknown
 }
 
-extension WeatherTypeExtension on WeatherType {
+extension WeatherIconExtension on WeatherType {
   String get icon {
     switch (this) {
       case WeatherType.thunderstorm:
