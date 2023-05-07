@@ -31,7 +31,7 @@ class OpenWeatherService implements WeatherRepositoryService {
   Future<WeatherApi> getWeatherByCityName(String cityName) async {
     final Response response = await _makeRequestToApi(cityName);
     try {
-      return WeatherApi.fromCurrentJson(response.data);
+      return WeatherApi.fromOpenWeatherCurrentJson(response.data);
     } catch (e) {
       throw ParsingResponseFromApiException(e.toString());
     }
@@ -53,7 +53,7 @@ class OpenWeatherService implements WeatherRepositoryService {
     final List<WeatherApi> listWeatherApi = [];
     for (int i = 0; i < 3; i++) {
       listWeatherApi.add(
-        WeatherApi.fromDailyForecast(response.data, i),
+        WeatherApi.fromOpenWeatherDailyJson(response.data, i),
       );
     }
     return listWeatherApi;
