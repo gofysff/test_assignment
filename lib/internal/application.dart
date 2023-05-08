@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_assignment/presentation/screen2.dart';
-import 'package:test_assignment/presentation/screen3.dart';
+import 'package:test_assignment/presentation/screens/screen2.dart';
+import 'package:test_assignment/presentation/screens/screen3.dart';
 
-import '../presentation/screen1.dart';
+import '../presentation/screens/screen1.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

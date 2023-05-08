@@ -20,7 +20,6 @@ class ApiUtil {
   Future<List<Weather>> getWeatherByCityNameFor3Days(String cityName) async {
     final result =
         await _weatherRepositoryService.getWeatherByCityNameFor3Days(cityName);
-    // sor
     final convertedResult =
         result.map((e) => convertFromWeatherApi(e)).toList();
     return convertedResult;
