@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:test_assignment/domain/model/weather_type.dart';
 import 'package:test_assignment/presentation/emojies/weather_type_emojies.dart';
-import 'package:test_assignment/presentation/screens/screen3.dart';
+import 'package:test_assignment/presentation/screens/screen3/screen3.dart';
 import 'package:weather_icons/weather_icons.dart';
 
-import '../utils/detail_parameter_info.dart';
+import '../../utils/detail_parameter_info.dart';
+import 'res.dart';
 
 class DetailWeatherInfo extends StatelessWidget {
   static const routeName = '/detailWeatherInfo';
@@ -82,7 +83,7 @@ class _DetailedWeatherInfoCard extends StatelessWidget {
                 // child: Text('Temp min'),
                 child: DetailParameterInfo(
                   iconData: WeatherIcons.thermometer,
-                  detailLabel: 'temp min',
+                  detailLabel: detailParameterInfo_1_1Label,
                   detailData: '20\u2103',
                 ),
               ),
@@ -91,7 +92,7 @@ class _DetailedWeatherInfoCard extends StatelessWidget {
               child: Center(
                 child: DetailParameterInfo(
                   iconData: WeatherIcons.thermometer,
-                  detailLabel: 'temp max',
+                  detailLabel: detailParameterInfo_1_2Label,
                   detailData: '25\u2103',
                 ),
               ),
@@ -107,12 +108,12 @@ class _DetailedWeatherInfoCard extends StatelessWidget {
           children: const [
             DetailParameterInfo(
               iconData: WeatherIcons.humidity,
-              detailLabel: 'humididty',
+              detailLabel: detailParameterInfo_2_1Label,
               detailData: '50%',
             ),
             DetailParameterInfo(
               iconData: WeatherIcons.windy,
-              detailLabel: 'wind',
+              detailLabel: detailParameterInfo_2_2Label,
               detailData: '2.4 km/h',
             ),
           ],

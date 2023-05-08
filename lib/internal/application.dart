@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_assignment/presentation/screens/screen2.dart';
-import 'package:test_assignment/presentation/screens/screen3.dart';
+import 'package:test_assignment/presentation/screens/screen2/screen2.dart';
+import 'package:test_assignment/presentation/screens/screen3/screen3.dart';
 import 'package:test_assignment/presentation/styling/theme.dart';
 
-import '../presentation/screens/screen1.dart';
+import '../presentation/screens/screen1/screen1.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
   }
 
   Map<String, WidgetBuilder> get routes => {
-        '/': (context) => SearchCity(),
+        '/': (context) => const SearchCity(),
         DetailWeatherInfo.routeName: (context) => const DetailWeatherInfo(),
         Weather3Days.routeName: (context) => const Weather3Days(),
       };

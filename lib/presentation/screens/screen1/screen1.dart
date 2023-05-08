@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../styling/colors.dart';
-import 'screen2.dart';
+import '../../styling/colors.dart';
+import '../screen2/screen2.dart';
+import 'res.dart';
 
 class SearchCity extends StatefulWidget {
   const SearchCity({super.key});
@@ -20,7 +21,7 @@ class _SearchCityState extends State<SearchCity> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Weather App',
+            appBarTitleText,
             style:
                 Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 24),
           ),
@@ -46,7 +47,7 @@ class _SearchCityState extends State<SearchCity> {
         controller: _controller,
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'Enter the city name',
+          hintText: hintText,
         ),
       );
 
@@ -63,8 +64,10 @@ class _SearchCityState extends State<SearchCity> {
             // call to bloc
             Navigator.pushNamed(context, DetailWeatherInfo.routeName);
           },
-          child:
-              Text('Confirm', style: Theme.of(context).textTheme.titleMedium),
+          child: Text(
+            confirmButtonText,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
         ),
       );
 }
