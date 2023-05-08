@@ -5,3 +5,4 @@ const hintText = 'Enter the city name';
 const confirmButtonText = 'Confirm';
 
 const errorText = 'Data retrieval error';
+const restartButtonText = 'Restart';

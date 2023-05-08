@@ -14,6 +14,13 @@ class SearchCity extends StatefulWidget {
 
 class _SearchCityState extends State<SearchCity> {
   final _controller = TextEditingController();
+  late double _heightScreen;
+
+  @override
+  void didChangeDependencies() {
+    _heightScreen = MediaQuery.of(context).size.height;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +48,12 @@ class _SearchCityState extends State<SearchCity> {
     super.dispose();
   }
 
-  void _showSnackBarWihError() {
-    //TODO: test this
+  void _showSnackBarWihError({double bottomMargin = 500.0}) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(errorText),
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: const Text(errorText),
+        margin: EdgeInsets.only(bottom: bottomMargin),
       ),
     );
   }
@@ -55,10 +63,16 @@ class _SearchCityState extends State<SearchCity> {
         children: [textField, confirmButton],
       );
 
-  Widget get errorBody => const Center(
-        child: Text(
-          errorText,
-          style: TextStyle(color: textPrimaryColor, fontSize: 50),
+  Widget get errorBody => Center(
+        child: Column(
+          children: [
+            const Text(
+              errorText,
+              style: TextStyle(color: textPrimaryColor, fontSize: 50),
+            ),
+            const SizedBox(height: 30),
+            restartButton,
+          ],
         ),
       );
 
@@ -86,6 +100,24 @@ class _SearchCityState extends State<SearchCity> {
           },
           child: Text(
             confirmButtonText,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+      );
+
+  Widget get restartButton => SizedBox(
+        width: double.infinity,
+        height: 50,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundElevatedButtonsColor,
+          ),
+          onPressed: () {
+            // call again to bloc
+            //tODO: complete this
+          },
+          child: Text(
+            restartButtonText,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
