@@ -24,33 +24,37 @@ class DetailWeatherInfo extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
+      body: ListView(
+        children: [
+          const SizedBox(
+            height: 50,
+          ),
+          Center(
+            child: Text(
               'Madrid',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(
-              height: 200,
-              child: Center(
-                child: Text(
-                  WeatherType.drizzle.toEmoji(),
-                  style: const TextStyle(fontSize: 100),
-                ),
+          ),
+          SizedBox(
+            height: 200,
+            child: Center(
+              child: Text(
+                WeatherType.drizzle.toEmoji(),
+                style: const TextStyle(fontSize: 100),
               ),
             ),
-            Text(
+          ),
+          Center(
+            child: Text(
               '31\u2103',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const _DetailedWeatherInfoCard(
-              height: 230,
-            )
-          ],
-        ),
+          ),
+          const SizedBox(height: 150),
+          const _DetailedWeatherInfoCard(
+            height: 230,
+          )
+        ],
       ),
     );
   }

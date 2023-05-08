@@ -62,6 +62,7 @@ class _SearchCityState extends State<SearchCity> {
             // TODO: add validation
             // TODO: add logic to get data from API
             // call to bloc
+
             Navigator.pushNamed(context, DetailWeatherInfo.routeName);
           },
           child: Text(
