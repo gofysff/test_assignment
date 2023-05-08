@@ -22,8 +22,7 @@ class _SearchCityState extends State<SearchCity> {
         title: Center(
           child: Text(
             appBarTitleText,
-            style:
-                Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 24),
+            style: Theme.of(context).primaryTextTheme.titleLarge,
           ),
         ),
       ),

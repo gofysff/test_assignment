@@ -13,7 +13,7 @@ ThemeData applicationTheme() {
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         color: textAccentColor,
-        fontSize: 40,
+        fontSize: 50,
       ),
       titleMedium: TextStyle(
         color: textPrimaryColor,
@@ -22,6 +22,13 @@ ThemeData applicationTheme() {
       titleSmall: TextStyle(
         color: textMiddleColor,
         fontSize: 16,
+      ),
+    ),
+    primaryTextTheme: const TextTheme(
+      /// used in app bar
+      titleLarge: TextStyle(
+        color: textPrimaryColor,
+        fontSize: 24,
       ),
     ),
     colorScheme: const ColorScheme.dark(
