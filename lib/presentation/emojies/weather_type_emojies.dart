@@ -1,7 +1,7 @@
 import 'package:test_assignment/domain/model/weather_type.dart';
 
 extension WeatherEmojiesExtension on WeatherType {
-  String get icon {
+  String toEmoji() {
     switch (this) {
       case WeatherType.thunderstorm:
         return '🌩';

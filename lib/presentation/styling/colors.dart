@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 const backgroundAppColor = Color(0xff0B131E);
 const backgroundCardColor = Color(0xff202B3B);
-const backgroundAppBarColor = Color(0xffF2F2F2);
+const backgroundAppBarColor = Color(0xff202B3B);
+const backgroundElevatedButtonsColor = Color(0xff202B3B);
 
 const textAccentColor = Color(0xffDDE0E4);
 const textMiddleColor = Color(0xffC4CAD3);
