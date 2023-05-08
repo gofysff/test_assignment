@@ -28,10 +28,9 @@ class _SearchCityState extends State<SearchCity> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [textField, confirmButton],
-        ),
+        //TODO: add logic to show error or ok body
+        // set consumer here
+        child: okBody,
       ),
     );
   }
@@ -41,6 +40,27 @@ class _SearchCityState extends State<SearchCity> {
     _controller.dispose();
     super.dispose();
   }
+
+  void _showSnackBarWihError() {
+    //TODO: test this
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(errorText),
+      ),
+    );
+  }
+
+  Widget get okBody => Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [textField, confirmButton],
+      );
+
+  Widget get errorBody => const Center(
+        child: Text(
+          errorText,
+          style: TextStyle(color: textPrimaryColor, fontSize: 50),
+        ),
+      );
 
   Widget get textField => TextField(
         controller: _controller,
