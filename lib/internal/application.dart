@@ -17,7 +17,7 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  final ListWeatherBloc _listWeatherBloc = ListWeatherBloc();
+  final ListWeatherBloc _listWeatherBloc = ListWeatherBloc(weatherRepository);
 
   @override
   Widget build(BuildContext context) {

@@ -12,10 +12,10 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
   CityWeatherBloc(this._weatherRepository) : super(const CityWeatherState()) {
     on<CityWeatherEvent>((event, emit) async {
-      if (event is CityWeatherEventChange) {
+      if (event is CityWeatherChangeEvent) {
         await _onCityEventChange(emit, event);
       }
-      if (event is CityWeatherEventInitial) {
+      if (event is CityWeatherInitialEvent) {
         _onInitialEvent(emit);
       }
     });
@@ -29,7 +29,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   }
 
   Future<void> _onCityEventChange(
-      Emitter<CityWeatherState> emit, CityWeatherEventChange event) async {
+      Emitter<CityWeatherState> emit, CityWeatherChangeEvent event) async {
     emit(
       state.copyWith(city: event.city, status: CityWeatherStatus.loading),
     );

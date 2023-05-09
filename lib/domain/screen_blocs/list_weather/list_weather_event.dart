@@ -7,12 +7,12 @@ abstract class ListWeatherEvent extends Equatable {}
 class ListWeatherSuccessEvent extends ListWeatherEvent {
   final String city;
 
-  /// weather for 3 days
-  final List<Weather> weathers;
-  ListWeatherSuccessEvent(this.city, this.weathers);
+  ListWeatherSuccessEvent(
+    this.city,
+  );
 
   @override
-  List<Object?> get props => [city, weathers];
+  List<Object?> get props => [city];
 }
 
 /// used when [CityWeatherBloc] state isn't success

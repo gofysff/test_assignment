@@ -135,7 +135,7 @@ class _SearchCityState extends State<SearchCity> {
             // TODO: add logic to get data from API
             // call to bloc
             BlocProvider.of<CityWeatherBloc>(context).add(
-              CityWeatherEventChange(_controller.text.trim()),
+              CityWeatherChangeEvent(_controller.text.trim()),
             );
           },
           child: Text(
@@ -156,7 +156,7 @@ class _SearchCityState extends State<SearchCity> {
             // call again to bloc
             //tODO: complete this
             BlocProvider.of<CityWeatherBloc>(context)
-                .add(CityWeatherEventInitial());
+                .add(CityWeatherInitialEvent());
           },
           child: Text(
             restartButtonText,
