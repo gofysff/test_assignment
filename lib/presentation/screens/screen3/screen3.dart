@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
 import 'package:test_assignment/domain/screen_blocs/list_weather/list_weather_bloc.dart';
 import 'package:test_assignment/presentation/screens/screen3/res.dart';
+import 'package:test_assignment/presentation/utils/list_weather_data.dart';
 
 class Weather3Days extends StatelessWidget {
   static const routeName = '/weather3Days';
@@ -10,6 +11,7 @@ class Weather3Days extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final city = BlocProvider.of<CityWeatherBloc>(context).state.city;
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -27,22 +29,18 @@ class Weather3Days extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: BlocBuilder<ListWeatherBloc, ListWeatherState>(
-                  builder: (context, statelist) {
-                    return BlocBuilder<CityWeatherBloc, CityWeatherState>(
-                      builder: (context, stateCity) {
-                        if (statelist.isSorted) {
-                          return Text(
-                            '$labelText${stateCity.city} $sortedBy $sortingAction2',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          );
-                        } else {
-                          return Text(
-                            '$labelText${stateCity.city} $sortedBy $sortingAction1',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          );
-                        }
-                      },
-                    );
+                  builder: (context, stateList) {
+                    if (stateList.isSorted) {
+                      return Text(
+                        '$labelText$city $sortedBy $sortingAction2',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      );
+                    } else {
+                      return Text(
+                        '$labelText$city $sortedBy $sortingAction1',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      );
+                    }
                   },
                 ),
               ),
@@ -76,8 +74,6 @@ class Weather3Days extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 60),
-            // TODO:
-            // exampleListWeather
             BlocBuilder<ListWeatherBloc, ListWeatherState>(
               builder: (context, state) {
                 if (state.status.isInitial || state.status.isLoading) {
@@ -94,55 +90,5 @@ class Weather3Days extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class ListWeatherData extends StatelessWidget {
-  ListWeatherData({super.key, required this.days, required this.temp}) {
-    if (days.length != temp.length) {
-      throw Exception('days and minTemp must have the same length');
-    }
-  }
-
-  /// days of the week (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
-  final List<String> days;
-
-  /// contains the minimum temperature, maximum temperature and average
-  /// temperature for each day in corresponding order
-  final List<List<int>> temp;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      children: formListChildren(),
-    );
-  }
-
-  List<Widget> formListChildren() {
-    List<Widget> listViewChildrens = [
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [Text('min'), Text('max'), Text('average')],
-        ),
-      )
-    ];
-    for (int i = 0; i < days.length; i++) {
-      listViewChildrens.add(
-        ListTile(
-          title: Text(days[i]),
-          subtitle: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text('${temp[i][0]}$measurementUnit - $minimum'),
-              Text('${temp[i][1]}$measurementUnit - $maximum'),
-              Text('${temp[i][2]}$measurementUnit - $average')
-            ],
-          ),
-        ),
-      );
-    }
-    return listViewChildrens;
   }
 }
