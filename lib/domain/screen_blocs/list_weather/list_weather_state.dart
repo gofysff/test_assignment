@@ -21,9 +21,24 @@ class ListWeatherState extends Equatable {
   /// Now it is [minTemp]
   final List<WeekDayedWeather> weathersSorted = [];
 
+  final bool isSorted;
+
+  /// return sorted or not sorted [WeekDayedWeather] according to [isSorted]
+  List<WeekDayedWeather> get showWeakDayedWeathers =>
+      isSorted ? weathersSorted : weathers;
+
+  /// return sorted or not sorted weakdays according to [isSorted]
+  List<String> get showWeakDays =>
+      showWeakDayedWeathers.map((e) => intToEnglishMapper(e.weekday)).toList();
+
+  /// return sorted or not sorted [weathers] according to [isSorted]
+  List<Weather> get showWeathers =>
+      showWeakDayedWeathers.map((e) => e.weather).toList();
+
   ListWeatherState({
     required this.status,
     required List<WeekDayedWeather> weathers,
+    this.isSorted = true,
   }) {
     this.weathers.addAll(weathers);
   }
@@ -40,10 +55,12 @@ class ListWeatherState extends Equatable {
   ListWeatherState copyWith({
     ListWeatherStatus? status,
     List<WeekDayedWeather>? weathers,
+    bool? isSorted,
   }) {
     return ListWeatherState(
       status: status ?? this.status,
       weathers: weathers ?? this.weathers,
+      isSorted: isSorted ?? this.isSorted,
     );
   }
 

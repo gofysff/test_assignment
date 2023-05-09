@@ -1,7 +1,7 @@
 import 'package:test_assignment/domain/model/dated_weather.dart';
 
 extension IntToStringDay on WeekDayedWeather {
-  String get dayString => intToEnglishMapper(weekday);
+  String toDayString() => intToEnglishMapper(weekday);
 }
 
 /// in english

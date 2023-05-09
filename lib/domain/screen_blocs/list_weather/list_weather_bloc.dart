@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:test_assignment/domain/model/dated_weather.dart';
 import 'package:test_assignment/domain/model/weather.dart';
 import 'package:test_assignment/domain/repository/weather_repository.dart';
+import 'package:test_assignment/presentation/mappers/int_to_string_day.dart';
 
 part 'list_weather_event.dart';
 part 'list_weather_state.dart';
@@ -17,14 +18,19 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
     on<ListWeatherEvent>(
       (event, emit) async {
         if (event is ListWeatherInitialEvent) {
-          emit(
-            ListWeatherInitial(
-                weathers: const [], status: ListWeatherStatus.initial),
-          );
+          _onInitialEvent(emit);
         } else if (event is ListWeatherSuccessEvent) {
           await _onSuccessEvent(emit, event);
+        } else if (event is ListWeatherChangeSortEvent) {
+          _onChangeSortEvent(emit);
         }
       },
+    );
+  }
+
+  void _onInitialEvent(Emitter<ListWeatherState> emit) {
+    emit(
+      ListWeatherInitial(weathers: const [], status: ListWeatherStatus.initial),
     );
   }
 
@@ -42,11 +48,17 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
         ]),
       );
     } catch (e) {
-      print('we catch error');
-      print(e);
       emit(
         state.copyWith(status: ListWeatherStatus.error),
       );
     }
+  }
+
+  void _onChangeSortEvent(Emitter<ListWeatherState> emit) {
+    emit(
+      state.copyWith(
+        isSorted: !state.isSorted,
+      ),
+    );
   }
 }

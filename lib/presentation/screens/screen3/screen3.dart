@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
 import 'package:test_assignment/presentation/screens/screen3/res.dart';
 
 class Weather3Days extends StatelessWidget {
@@ -23,9 +25,13 @@ class Weather3Days extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
-                child: Text(
-                  '${labelText}Madrid $sortedBy $sortingAction2',
-                  style: Theme.of(context).textTheme.titleMedium,
+                child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
+                  builder: (context, state) {
+                    return Text(
+                      '$labelText${state.city} $sortedBy $sortingAction2',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    );
+                  },
                 ),
               ),
             ),

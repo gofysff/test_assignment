@@ -158,7 +158,7 @@ class _DetailedWeatherInfoCard extends StatelessWidget {
                 return DetailParameterInfo(
                   iconData: WeatherIcons.humidity,
                   detailLabel: detailParameterInfo_2_1Label,
-                  detailData: '${state.weather?.humidity}}%',
+                  detailData: '${state.weather?.humidity}%',
                 );
               },
             ),

@@ -20,3 +20,9 @@ class ListWeatherInitialEvent extends ListWeatherEvent {
   @override
   List<Object?> get props => [];
 }
+
+/// used when  we want to sort list of weather or stop sorting
+class ListWeatherChangeSortEvent extends ListWeatherEvent {
+  @override
+  List<Object?> get props => [];
+}

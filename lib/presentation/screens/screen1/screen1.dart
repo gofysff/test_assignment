@@ -25,25 +25,6 @@ class _SearchCityState extends State<SearchCity> {
     super.didChangeDependencies();
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Center(
-  //         child: Text(
-  //           appBarTitleText,
-  //           style: Theme.of(context).primaryTextTheme.titleLarge,
-  //         ),
-  //       ),
-  //     ),
-  //     body: Padding(
-  //       padding: const EdgeInsets.all(16.0),
-  //       //TODO: add logic to show error or ok body
-  //       // set consumer here
-  //       child: okBody,
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,6 +136,8 @@ class _SearchCityState extends State<SearchCity> {
           onPressed: () {
             // call again to bloc
             //tODO: complete this
+            _controller.clear();
+
             BlocProvider.of<CityWeatherBloc>(context)
                 .add(CityWeatherInitialEvent());
           },
