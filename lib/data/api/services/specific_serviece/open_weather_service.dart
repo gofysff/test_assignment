@@ -20,8 +20,6 @@ class OpenWeatherService implements WeatherRepositoryService {
       {String apiType = ''}) async {
     // apitype can be: daily, and other if U'r not poor like me and have money for premium account
     try {
-      print(
-          'api.openweathermap.org/data/2.5/forecast/$apiType?q=$cityName&appid=$apiKey&units=metric');
       final Response response = await _dio.get(
         '$apiType?q=$cityName&appid=$apiKey&units=metric',
       );

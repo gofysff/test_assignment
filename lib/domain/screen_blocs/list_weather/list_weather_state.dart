@@ -76,7 +76,7 @@ class ListWeatherState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [weathers, weathersSorted];
+  List<Object?> get props => [weathers, weathersSorted, status, isSorted];
 }
 
 class ListWeatherInitial extends ListWeatherState {

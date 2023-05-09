@@ -67,9 +67,14 @@ class DetailWeatherInfo extends StatelessWidget {
             SizedBox(
               height: 200,
               child: Center(
-                child: Text(
-                  WeatherType.drizzle.toEmoji(),
-                  style: const TextStyle(fontSize: 100),
+                child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
+                  builder: (context, state) {
+                    return Text(
+                      state.weather?.weatherType.toEmoji() ??
+                          WeatherType.drizzle.toEmoji(),
+                      style: const TextStyle(fontSize: 100),
+                    );
+                  },
                 ),
               ),
             ),
