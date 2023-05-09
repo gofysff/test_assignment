@@ -40,7 +40,7 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
     try {
       List<Weather> weathers =
           await _weatherRepository.getWeatherByCityNameFor3Days(event.city);
-      print(weathers);
+
       emit(
         ListWeatherState(
           status: ListWeatherStatus.success,
@@ -61,7 +61,7 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
   void _onChangeSortEvent(Emitter<ListWeatherState> emit) {
     emit(
       state.copyWith(
-        isSorted: !state.isSorted,
+        isSorted: state.isSorted ? false : true,
       ),
     );
   }
