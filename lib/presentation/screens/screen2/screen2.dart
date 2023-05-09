@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_assignment/domain/model/weather_type.dart';
+import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
 import 'package:test_assignment/presentation/emojies/weather_type_emojies.dart';
+import 'package:test_assignment/presentation/screens/screen3/res.dart';
 import 'package:test_assignment/presentation/screens/screen3/screen3.dart';
 import 'package:weather_icons/weather_icons.dart';
 
@@ -29,11 +32,15 @@ class DetailWeatherInfo extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          Center(
-            child: Text(
-              'Madrid',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+          BlocBuilder<CityWeatherBloc, CityWeatherState>(
+            builder: (context, state) {
+              return Center(
+                child: Text(
+                  state.city,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              );
+            },
           ),
           SizedBox(
             height: 200,
@@ -44,11 +51,15 @@ class DetailWeatherInfo extends StatelessWidget {
               ),
             ),
           ),
-          Center(
-            child: Text(
-              '31\u2103',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+          BlocBuilder<CityWeatherBloc, CityWeatherState>(
+            builder: (context, state) {
+              return Center(
+                child: Text(
+                  '${state.weather?.temp}$measurementUnit',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              );
+            },
           ),
           const SizedBox(height: 150),
           const _DetailedWeatherInfoCard(
@@ -81,23 +92,32 @@ class _DetailedWeatherInfoCard extends StatelessWidget {
 
   Expanded get firstRow => Expanded(
         child: Row(
-          children: const [
+          children: [
             Expanded(
               child: Center(
-                // child: Text('Temp min'),
-                child: DetailParameterInfo(
-                  iconData: WeatherIcons.thermometer,
-                  detailLabel: detailParameterInfo_1_1Label,
-                  detailData: '20\u2103',
+                child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
+                  builder: (context, state) {
+                    return DetailParameterInfo(
+                      iconData: WeatherIcons.thermometer,
+                      detailLabel: detailParameterInfo_1_1Label,
+                      detailData:
+                          '${state.weather?.tempMin}$unitOfTempMeasurement',
+                    );
+                  },
                 ),
               ),
             ),
             Expanded(
               child: Center(
-                child: DetailParameterInfo(
-                  iconData: WeatherIcons.thermometer,
-                  detailLabel: detailParameterInfo_1_2Label,
-                  detailData: '25\u2103',
+                child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
+                  builder: (context, state) {
+                    return DetailParameterInfo(
+                      iconData: WeatherIcons.thermometer,
+                      detailLabel: detailParameterInfo_1_2Label,
+                      detailData:
+                          '${state.weather?.tempMax}$unitOfTempMeasurement',
+                    );
+                  },
                 ),
               ),
             ),
@@ -109,16 +129,25 @@ class _DetailedWeatherInfoCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: const [
-            DetailParameterInfo(
-              iconData: WeatherIcons.humidity,
-              detailLabel: detailParameterInfo_2_1Label,
-              detailData: '50%',
+          children: [
+            BlocBuilder<CityWeatherBloc, CityWeatherState>(
+              builder: (context, state) {
+                return DetailParameterInfo(
+                  iconData: WeatherIcons.humidity,
+                  detailLabel: detailParameterInfo_2_1Label,
+                  detailData: '${state.weather?.humidity}}%',
+                );
+              },
             ),
-            DetailParameterInfo(
-              iconData: WeatherIcons.windy,
-              detailLabel: detailParameterInfo_2_2Label,
-              detailData: '2.4 km/h',
+            BlocBuilder<CityWeatherBloc, CityWeatherState>(
+              builder: (context, state) {
+                return DetailParameterInfo(
+                  iconData: WeatherIcons.windy,
+                  detailLabel: detailParameterInfo_2_2Label,
+                  detailData:
+                      '${state.weather?.windSpeed} $unitOfWindMeasurement',
+                );
+              },
             ),
           ],
         ),
