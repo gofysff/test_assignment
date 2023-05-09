@@ -1,0 +1,51 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+import 'package:test_assignment/domain/model/weather.dart';
+import 'package:test_assignment/domain/repository/weather_repository.dart';
+
+part 'city_weather_event.dart';
+part 'city_weather_state.dart';
+
+class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
+  final WeatherRepository _weatherRepository;
+
+  CityWeatherBloc(this._weatherRepository) : super(const CityWeatherState()) {
+    on<CityWeatherEvent>(
+      (event, emit) {
+        if (event is CityEventInitial) {
+          _onInitialEvent(emit);
+        } else if (event is CityEventChange) {
+          _onCityEventChange(emit, event);
+        }
+      },
+    );
+  }
+
+  void _onInitialEvent(Emitter<CityWeatherState> emit) {
+    emit(
+      state.copyWith(city: '', status: CityStatus.initial, weather: null),
+    );
+  }
+
+  void _onCityEventChange(
+      Emitter<CityWeatherState> emit, CityEventChange event) {
+    emit(
+      state.copyWith(city: event.city, status: CityStatus.loading),
+    );
+
+    _weatherRepository
+        .getWeatherByCityName(event.city)
+        .then(
+          (value) => emit(
+            state.copyWith(
+                city: event.city, status: CityStatus.success, weather: value),
+          ),
+        )
+        .catchError(
+          (e) => emit(
+            state.copyWith(city: event.city, status: CityStatus.error),
+          ),
+        );
+  }
+}
