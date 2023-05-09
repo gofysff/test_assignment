@@ -71,16 +71,10 @@ class _SearchCityState extends State<SearchCity> {
               return okBody;
             } else if (state.status.isError) {
               return errorBody;
-            } else if (state.status.isLoading) {
+            } else if (state.status.isLoading || state.status.isSuccess) {
               return const Center(child: CircularProgressIndicator());
             }
-            // unreal case
-            return Container(
-              color: Colors.red,
-              child: const Center(
-                child: Text('Something went wrong'),
-              ),
-            );
+            return const SizedBox();
           },
         ),
       ),
