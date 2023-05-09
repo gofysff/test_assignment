@@ -78,45 +78,23 @@ class Weather3Days extends StatelessWidget {
             const SizedBox(height: 60),
             // TODO:
             // exampleListWeather
+            BlocBuilder<ListWeatherBloc, ListWeatherState>(
+              builder: (context, state) {
+                if (state.status.isInitial || state.status.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state.status.isError) {
+                  return const Center(child: Text('Error'));
+                }
+                // is loaded
+                return ListWeatherData(
+                    days: state.showWeakDays, temp: state.showAllTemp);
+              },
+            )
           ],
         ),
       ),
     );
   }
-
-  Widget get exampleListWeather => ListView(
-        shrinkWrap: true,
-        children: [
-          ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [Text('min'), Text('max'), Text('average')],
-            ),
-          ),
-          ListTile(
-            title: const Text('Monday'),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Text('20°C - min'),
-                Text('25°C - max'),
-                Text('22°C - average')
-              ],
-            ),
-          ),
-          ListTile(
-            title: const Text('Monday'),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Text('20°C - min'),
-                Text('25°C - max'),
-                Text('22°C - average')
-              ],
-            ),
-          ),
-        ],
-      );
 }
 
 class ListWeatherData extends StatelessWidget {
@@ -135,10 +113,6 @@ class ListWeatherData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListView(
-    //   shrinkWrap: true,
-    //   children: listViewChildrens,
-    // );
     return ListView(
       shrinkWrap: true,
       children: formListChildren(),

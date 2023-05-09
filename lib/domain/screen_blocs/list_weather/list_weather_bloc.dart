@@ -40,12 +40,16 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
     try {
       List<Weather> weathers =
           await _weatherRepository.getWeatherByCityNameFor3Days(event.city);
+      print(weathers);
       emit(
-        ListWeatherState(status: ListWeatherStatus.success, weathers: [
-          WeekDayedWeather.today(weathers[0]),
-          WeekDayedWeather.tomorrow(weathers[1]),
-          WeekDayedWeather.dayAfterTomorrow(weathers[2]),
-        ]),
+        ListWeatherState(
+          status: ListWeatherStatus.success,
+          weathers: [
+            WeekDayedWeather.today(weathers[0]),
+            WeekDayedWeather.tomorrow(weathers[1]),
+            WeekDayedWeather.dayAfterTomorrow(weathers[2]),
+          ],
+        ),
       );
     } catch (e) {
       emit(

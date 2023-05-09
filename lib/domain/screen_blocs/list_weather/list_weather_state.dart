@@ -35,12 +35,23 @@ class ListWeatherState extends Equatable {
   List<Weather> get showWeathers =>
       showWeakDayedWeathers.map((e) => e.weather).toList();
 
+  /// return sorted or not sorted [min, max, average temp] according to [isSorted]
+
+  List<List<int>> get showAllTemp {
+    final List<List<int>> result = [];
+    for (final weather in showWeathers) {
+      result.add([weather.tempMin, weather.tempMax, weather.temp]);
+    }
+    return result;
+  }
+
   ListWeatherState({
     required this.status,
     required List<WeekDayedWeather> weathers,
     this.isSorted = true,
   }) {
     this.weathers.addAll(weathers);
+    sortWeathersByCriteria();
   }
 
   /// Sort [weathers] by [criteria](minTemp in weather)
@@ -71,3 +82,5 @@ class ListWeatherState extends Equatable {
 class ListWeatherInitial extends ListWeatherState {
   ListWeatherInitial({required super.status, required super.weathers});
 }
+
+void main(List<String> args) {}
