@@ -17,7 +17,7 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  final ListWeatherBloc listWeatherBloc = ListWeatherBloc();
+  final ListWeatherBloc _listWeatherBloc = ListWeatherBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +40,19 @@ class _MainAppState extends State<MainApp> {
 
   Map<String, WidgetBuilder> get routes => {
         '/': (context) => const SearchCity(),
-        // TODO: add listWeatherBloc to Weather3Days and DetailWeatherInfo
-
-        DetailWeatherInfo.routeName: (context) => const DetailWeatherInfo(),
-        Weather3Days.routeName: (context) => const Weather3Days(),
+        DetailWeatherInfo.routeName: (context) => BlocProvider.value(
+              value: _listWeatherBloc,
+              child: const DetailWeatherInfo(),
+            ),
+        Weather3Days.routeName: (context) => BlocProvider.value(
+              value: _listWeatherBloc,
+              child: const Weather3Days(),
+            ),
       };
 
   @override
   void dispose() {
-    listWeatherBloc.close();
+    _listWeatherBloc.close();
     super.dispose();
   }
 }
