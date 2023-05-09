@@ -1,24 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'city_weather_bloc.dart';
 
-enum CityStatus { initial, error, loading, success }
+enum CityWeatherStatus { initial, error, loading, success }
 
-extension CityStatusBoolX on CityStatus {
-  bool get isInitial => this == CityStatus.initial;
-  bool get isError => this == CityStatus.error;
-  bool get isLoading => this == CityStatus.loading;
-  bool get isSuccess => this == CityStatus.success;
+extension CityStatusBoolX on CityWeatherStatus {
+  bool get isInitial => this == CityWeatherStatus.initial;
+  bool get isError => this == CityWeatherStatus.error;
+  bool get isLoading => this == CityWeatherStatus.loading;
+  bool get isSuccess => this == CityWeatherStatus.success;
 }
 
 class CityWeatherState extends Equatable {
   const CityWeatherState({
     this.city = '',
-    this.status = CityStatus.initial,
+    this.status = CityWeatherStatus.initial,
     this.weather,
   });
 
   final String city;
-  final CityStatus status;
+  final CityWeatherStatus status;
   final Weather? weather;
 
   @override
@@ -26,7 +26,7 @@ class CityWeatherState extends Equatable {
 
   CityWeatherState copyWith({
     String? city,
-    CityStatus? status,
+    CityWeatherStatus? status,
     Weather? weather,
   }) {
     return CityWeatherState(

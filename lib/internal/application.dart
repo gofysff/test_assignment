@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
 import 'package:test_assignment/presentation/screens/screen2/screen2.dart';
 import 'package:test_assignment/presentation/screens/screen3/screen3.dart';
 import 'package:test_assignment/presentation/styling/theme.dart';
-
 import '../presentation/screens/screen1/screen1.dart';
+import 'dependencies/repository_module.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -12,9 +14,12 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     setVerticalModeInApplication();
-    return MaterialApp(
-      theme: applicationTheme(),
-      routes: routes,
+    return BlocProvider(
+      create: (context) => CityWeatherBloc(weatherRepository),
+      child: MaterialApp(
+        theme: applicationTheme(),
+        routes: routes,
+      ),
     );
   }
 

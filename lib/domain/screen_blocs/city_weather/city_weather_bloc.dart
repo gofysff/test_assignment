@@ -11,55 +11,53 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final WeatherRepository _weatherRepository;
 
   CityWeatherBloc(this._weatherRepository) : super(const CityWeatherState()) {
-    on<CityWeatherEvent>(
-      (event, emit) {
-        if (event is CityWeatherEventInitial) {
-          _onInitialEvent(emit);
-        } else if (event is CityWeatherEventChange) {
-          _onCityEventChange(emit, event);
-        }
-        // tODO: decide if we need this
-        else if (event is CityWeatherEventSuccess) {
-          _onSuccessEvent(emit, event);
-        }
-      },
-    );
-  }
+    // on<CityWeatherEventChange>(event, emit) async {
+    //   await _onCityEventChange2(emit, event);
+    // }
 
-  void _onSuccessEvent(
-      Emitter<CityWeatherState> emit, CityWeatherEventSuccess event) {
-    // tODO: decide if we need this
-
-    emit(
-      state.copyWith(
-          city: event.city, status: CityStatus.success, weather: event.weather),
-    );
+    // on<CityWeatherEventInitial>((event, emit) {
+    //   if (event is CityWeatherEventInitial) {
+    //     _onInitialEvent(emit);
+    //   }
+    // });
+    on<CityWeatherEvent>((event, emit) async {
+      if (event is CityWeatherEventChange) {
+        await _onCityEventChange(emit, event);
+      }
+      if (event is CityWeatherEventInitial) {
+        _onInitialEvent(emit);
+      }
+    });
   }
 
   void _onInitialEvent(Emitter<CityWeatherState> emit) {
     emit(
-      state.copyWith(city: '', status: CityStatus.initial, weather: null),
+      state.copyWith(
+          city: '', status: CityWeatherStatus.initial, weather: null),
     );
   }
 
-  void _onCityEventChange(
-      Emitter<CityWeatherState> emit, CityWeatherEventChange event) {
+  Future<void> _onCityEventChange(
+      Emitter<CityWeatherState> emit, CityWeatherEventChange event) async {
     emit(
-      state.copyWith(city: event.city, status: CityStatus.loading),
+      state.copyWith(city: event.city, status: CityWeatherStatus.loading),
     );
 
-    _weatherRepository
-        .getWeatherByCityName(event.city)
-        .then(
-          (value) => emit(
-            state.copyWith(
-                city: event.city, status: CityStatus.success, weather: value),
-          ),
-        )
-        .catchError(
-          (e) => emit(
-            state.copyWith(city: event.city, status: CityStatus.error),
-          ),
-        );
+    try {
+      Weather weather =
+          await _weatherRepository.getWeatherByCityName(event.city);
+      emit(
+        state.copyWith(
+            city: event.city,
+            status: CityWeatherStatus.success,
+            weather: weather),
+      );
+    } catch (e) {
+      print('we catch error');
+      print(e);
+      emit(
+        state.copyWith(city: event.city, status: CityWeatherStatus.error),
+      );
+    }
   }
 }

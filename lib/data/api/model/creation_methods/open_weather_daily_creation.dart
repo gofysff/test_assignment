@@ -1,6 +1,6 @@
 import '../weather_api.dart';
 
-/// creation model from json from this api https://openweathermap.org/current
+/// creation model from json from this api https://openweathermap.org/forecast16
 /// used in facotory constructor of [WeatherApi]
 
 WeatherApi createFromOpenWeatherCurrentJson(Map<String, dynamic> json) =>

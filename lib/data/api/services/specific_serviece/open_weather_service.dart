@@ -10,18 +10,22 @@ import '../weather_repositiry_service.dart';
 /// class what is responsible for getting data from open weather api
 
 class OpenWeatherService implements WeatherRepositoryService {
-  static const _baseUrl = ' https://pro.openweathermap.org/data/2.5/forecast/';
+  static const _baseUrl = 'http://api.openweathermap.org/data/2.5/forecast/';
 
   final Dio _dio = Dio(
     BaseOptions(baseUrl: _baseUrl),
   );
 
   Future<Response<dynamic>> _makeRequestToApi(String cityName,
-      {String apiType = 'weather'}) async {
+      {String apiType = ''}) async {
+    // apitype can be: daily, and other if U'r not poor like me and have money for premium account
     try {
-      return _dio.get(
+      print(
+          'api.openweathermap.org/data/2.5/forecast/$apiType?q=$cityName&appid=$apiKey&units=metric');
+      final Response response = await _dio.get(
         '$apiType?q=$cityName&appid=$apiKey&units=metric',
       );
+      return response;
     } catch (e) {
       throw ExecutionRequestException(e.toString());
     }
@@ -31,7 +35,7 @@ class OpenWeatherService implements WeatherRepositoryService {
   Future<WeatherApi> getWeatherByCityName(String cityName) async {
     final Response response = await _makeRequestToApi(cityName);
     try {
-      return WeatherApi.fromOpenWeatherCurrentJson(response.data);
+      return WeatherApi.fromOpenWeatherApi3hours(response.data);
     } catch (e) {
       throw ParsingResponseFromApiException(e.toString());
     }
@@ -39,8 +43,7 @@ class OpenWeatherService implements WeatherRepositoryService {
 
   @override
   Future<List<WeatherApi>> getWeatherByCityNameFor3Days(String cityName) async {
-    final Response response =
-        await _makeRequestToApi(cityName, apiType: 'daily');
+    final Response response = await _makeRequestToApi(cityName);
     try {
       return _formListWeatherApiFromResponse(response);
     } catch (e) {
@@ -50,10 +53,11 @@ class OpenWeatherService implements WeatherRepositoryService {
 
   List<WeatherApi> _formListWeatherApiFromResponse(Response response) {
     // form for 3 days
+    // one day has 8 timestamps
     final List<WeatherApi> listWeatherApi = [];
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3 * 8; i += 8) {
       listWeatherApi.add(
-        WeatherApi.fromOpenWeatherDailyJson(response.data, i),
+        WeatherApi.fromOpenWeatherApi3hours(response.data, indexTimeStamp: i),
       );
     }
     return listWeatherApi;

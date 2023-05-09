@@ -17,18 +17,3 @@ class CityWeatherEventChange extends CityWeatherEvent {
   @override
   List<Object> get props => [city];
 }
-
-class CityWeatherEventSuccess extends CityWeatherEvent {
-  // tODO: decide if we need this
-
-  CityWeatherEventSuccess(
-    this.city,
-    this.weather,
-  );
-
-  final String city;
-  final Weather weather;
-
-  @override
-  List<Object> get props => [weather, city];
-}

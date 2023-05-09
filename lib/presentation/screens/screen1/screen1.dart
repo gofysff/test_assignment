@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
 
 import '../../styling/colors.dart';
 import '../screen2/screen2.dart';
@@ -15,6 +17,7 @@ class SearchCity extends StatefulWidget {
 class _SearchCityState extends State<SearchCity> {
   final _controller = TextEditingController();
   late double _heightScreen;
+  GlobalKey<ScaffoldState> firstScreenKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
@@ -22,9 +25,29 @@ class _SearchCityState extends State<SearchCity> {
     super.didChangeDependencies();
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: Center(
+  //         child: Text(
+  //           appBarTitleText,
+  //           style: Theme.of(context).primaryTextTheme.titleLarge,
+  //         ),
+  //       ),
+  //     ),
+  //     body: Padding(
+  //       padding: const EdgeInsets.all(16.0),
+  //       //TODO: add logic to show error or ok body
+  //       // set consumer here
+  //       child: okBody,
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: firstScreenKey,
       appBar: AppBar(
         title: Center(
           child: Text(
@@ -35,9 +58,31 @@ class _SearchCityState extends State<SearchCity> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        //TODO: add logic to show error or ok body
-        // set consumer here
-        child: okBody,
+        child: BlocConsumer<CityWeatherBloc, CityWeatherState>(
+          listener: (context, state) {
+            if (state.status.isError) {
+              _showSnackBarWihError(bottomMargin: _heightScreen / 2);
+            } else if (state.status.isSuccess) {
+              Navigator.of(context).pushNamed(DetailWeatherInfo.routeName);
+            }
+          },
+          builder: (context, state) {
+            if (state.status.isInitial) {
+              return okBody;
+            } else if (state.status.isError) {
+              return errorBody;
+            } else if (state.status.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            // unreal case
+            return Container(
+              color: Colors.red,
+              child: const Center(
+                child: Text('Something went wrong'),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -95,8 +140,9 @@ class _SearchCityState extends State<SearchCity> {
             // TODO: add validation
             // TODO: add logic to get data from API
             // call to bloc
-
-            Navigator.pushNamed(context, DetailWeatherInfo.routeName);
+            BlocProvider.of<CityWeatherBloc>(context).add(
+              CityWeatherEventChange(_controller.text.trim()),
+            );
           },
           child: Text(
             confirmButtonText,
@@ -115,6 +161,8 @@ class _SearchCityState extends State<SearchCity> {
           onPressed: () {
             // call again to bloc
             //tODO: complete this
+            BlocProvider.of<CityWeatherBloc>(context)
+                .add(CityWeatherEventInitial());
           },
           child: Text(
             restartButtonText,

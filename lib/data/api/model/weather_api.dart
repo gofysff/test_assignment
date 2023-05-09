@@ -1,3 +1,4 @@
+import 'creation_methods/open_weather_3hours.dart';
 import 'creation_methods/open_weather_current_creation.dart';
 import 'creation_methods/open_weather_daily_creation.dart';
 
@@ -20,9 +21,16 @@ class WeatherApi {
       required this.temp,
       required this.weatherTypeCode});
 
+  factory WeatherApi.fromOpenWeatherApi3hours(Map<String, dynamic> json,
+          {int indexTimeStamp = 0}) =>
+      createFrom3hours(json, indexTimeStamp);
+
+  ///! This project doesn't have such APIkey, because it's paid
   /// creation model from json from this api https://openweathermap.org/current
   factory WeatherApi.fromOpenWeatherCurrentJson(Map<String, dynamic> json) =>
       createFromOpenWeatherCurrentJson(json);
+
+  ///! This project doesn't have such APIkey, because it's paid
 
   /// creation model from json from this api https://openweathermap.org/forecast16
   factory WeatherApi.fromOpenWeatherDailyJson(
