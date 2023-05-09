@@ -132,10 +132,10 @@ class _SearchCityState extends State<SearchCity> {
           ),
           onPressed: () {
             // TODO: add validation
-            // TODO: add logic to get data from API
-            // call to bloc
+            final text = _controller.text.trim();
+            _controller.clear();
             BlocProvider.of<CityWeatherBloc>(context).add(
-              CityWeatherChangeEvent(_controller.text.trim()),
+              CityWeatherChangeEvent(text),
             );
           },
           child: Text(
