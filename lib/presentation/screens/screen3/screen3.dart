@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
+import 'package:test_assignment/domain/screen_blocs/list_weather/list_weather_bloc.dart';
 import 'package:test_assignment/presentation/screens/screen3/res.dart';
 
 class Weather3Days extends StatelessWidget {
@@ -25,11 +26,22 @@ class Weather3Days extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
-                child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
-                  builder: (context, state) {
-                    return Text(
-                      '$labelText${state.city} $sortedBy $sortingAction2',
-                      style: Theme.of(context).textTheme.titleMedium,
+                child: BlocBuilder<ListWeatherBloc, ListWeatherState>(
+                  builder: (context, statelist) {
+                    return BlocBuilder<CityWeatherBloc, CityWeatherState>(
+                      builder: (context, stateCity) {
+                        if (statelist.isSorted) {
+                          return Text(
+                            '$labelText${stateCity.city} $sortedBy $sortingAction2',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          );
+                        } else {
+                          return Text(
+                            '$labelText${stateCity.city} $sortedBy $sortingAction1',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          );
+                        }
+                      },
                     );
                   },
                 ),
@@ -37,7 +49,10 @@ class Weather3Days extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                BlocProvider.of<ListWeatherBloc>(context)
+                    .add(ListWeatherChangeSortEvent());
+              },
               child: SizedBox(
                 width: double.infinity,
                 child: Container(
@@ -46,13 +61,23 @@ class Weather3Days extends StatelessWidget {
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Center(child: Text('$sortBy $sortingAction1')),
+                  child: BlocBuilder<ListWeatherBloc, ListWeatherState>(
+                    builder: (context, state) {
+                      if (state.isSorted) {
+                        return const Center(
+                            child: Text('$sortBy $sortingAction1'));
+                      } else {
+                        return const Center(
+                            child: Text('$sortBy $sortingAction2'));
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 60),
             // TODO:
-            exampleListWeather
+            // exampleListWeather
           ],
         ),
       ),
