@@ -13,12 +13,26 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   CityWeatherBloc(this._weatherRepository) : super(const CityWeatherState()) {
     on<CityWeatherEvent>(
       (event, emit) {
-        if (event is CityEventInitial) {
+        if (event is CityWeatherEventInitial) {
           _onInitialEvent(emit);
-        } else if (event is CityEventChange) {
+        } else if (event is CityWeatherEventChange) {
           _onCityEventChange(emit, event);
         }
+        // tODO: decide if we need this
+        else if (event is CityWeatherEventSuccess) {
+          _onSuccessEvent(emit, event);
+        }
       },
+    );
+  }
+
+  void _onSuccessEvent(
+      Emitter<CityWeatherState> emit, CityWeatherEventSuccess event) {
+    // tODO: decide if we need this
+
+    emit(
+      state.copyWith(
+          city: event.city, status: CityStatus.success, weather: event.weather),
     );
   }
 
@@ -29,7 +43,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   }
 
   void _onCityEventChange(
-      Emitter<CityWeatherState> emit, CityEventChange event) {
+      Emitter<CityWeatherState> emit, CityWeatherEventChange event) {
     emit(
       state.copyWith(city: event.city, status: CityStatus.loading),
     );
