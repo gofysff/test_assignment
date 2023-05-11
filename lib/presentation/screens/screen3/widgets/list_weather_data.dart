@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/screen3/res.dart';
+import '../res.dart';
 
 class ListWeatherData extends StatelessWidget {
   ListWeatherData({super.key, required this.days, required this.temp}) {

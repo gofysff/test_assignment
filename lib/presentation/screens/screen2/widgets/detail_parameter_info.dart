@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import '../styling/colors.dart';
+import '../../../styling/colors.dart';
 
 /// this util is used in second screen for showing info about specific data like
 /// temperature, humidity etc
+/// this is used in [DetailedWeatherInfoCard]
 class DetailParameterInfo extends StatelessWidget {
   const DetailParameterInfo({
     Key? key,

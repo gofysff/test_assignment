@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
 import 'package:test_assignment/domain/screen_blocs/list_weather/list_weather_bloc.dart';
 import 'package:test_assignment/presentation/screens/screen3/res.dart';
-import 'package:test_assignment/presentation/utils/list_weather_data.dart';
+import 'package:test_assignment/presentation/screens/screen3/widgets/list_weather_data.dart';
 
 class Weather3Days extends StatelessWidget {
   static const routeName = '/weather3Days';
