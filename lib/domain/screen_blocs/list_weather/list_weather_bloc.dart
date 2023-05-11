@@ -14,7 +14,7 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
 
   ListWeatherBloc(this._weatherRepository)
       : super(
-          ListWeatherInitial(
+          ListWeatherInitialState(
               weathers: const [], status: ListWeatherStatus.initial),
         ) {
     on<ListWeatherEvent>(
@@ -32,7 +32,8 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
 
   void _onInitialised(Emitter<ListWeatherState> emit) {
     emit(
-      ListWeatherInitial(weathers: const [], status: ListWeatherStatus.initial),
+      ListWeatherInitialState(
+          weathers: const [], status: ListWeatherStatus.initial),
     );
   }
 

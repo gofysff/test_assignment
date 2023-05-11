@@ -77,6 +77,6 @@ class ListWeatherState extends Equatable {
   List<Object?> get props => [_weathers, _weathersSorted, status, isSorted];
 }
 
-class ListWeatherInitial extends ListWeatherState {
-  ListWeatherInitial({required super.status, required super.weathers});
+class ListWeatherInitialState extends ListWeatherState {
+  ListWeatherInitialState({required super.status, required super.weathers});
 }
