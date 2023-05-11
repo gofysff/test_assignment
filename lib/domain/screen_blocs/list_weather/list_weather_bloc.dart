@@ -20,23 +20,23 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
     on<ListWeatherEvent>(
       (event, emit) async {
         if (event is ListWeatherInitialised) {
-          _onInitialEvent(emit);
+          _onInitialised(emit);
         } else if (event is ListWeatherEndedWithSuccess) {
-          await _onSuccessEvent(emit, event);
+          await _onCompletedWithSuccess(emit, event);
         } else if (event is ListWeatherChangedSortingType) {
-          _onChangeSortEvent(emit);
+          _onChangedSortType(emit);
         }
       },
     );
   }
 
-  void _onInitialEvent(Emitter<ListWeatherState> emit) {
+  void _onInitialised(Emitter<ListWeatherState> emit) {
     emit(
       ListWeatherInitial(weathers: const [], status: ListWeatherStatus.initial),
     );
   }
 
-  Future<void> _onSuccessEvent(
+  Future<void> _onCompletedWithSuccess(
       Emitter<ListWeatherState> emit, ListWeatherEndedWithSuccess event) async {
     emit(state.copyWith(status: ListWeatherStatus.loading));
     try {
@@ -59,7 +59,7 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
     }
   }
 
-  void _onChangeSortEvent(Emitter<ListWeatherState> emit) {
+  void _onChangedSortType(Emitter<ListWeatherState> emit) {
     emit(
       state.copyWith(
         isSorted: state.isSorted ? false : true,
