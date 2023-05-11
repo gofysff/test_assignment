@@ -7,11 +7,11 @@ abstract class CityWeatherEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CityWeatherInitialEvent extends CityWeatherEvent {}
+class CityWeatherInitialised extends CityWeatherEvent {}
 
 /// event for changing city name
-class CityWeatherChangeEvent extends CityWeatherEvent {
-  CityWeatherChangeEvent(this.city);
+class CityWeatherChanged extends CityWeatherEvent {
+  CityWeatherChanged(this.city);
 
   final String city;
 

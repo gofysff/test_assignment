@@ -16,7 +16,7 @@ class ToDetailInfoButton extends StatelessWidget {
         return IconButton(
           onPressed: () {
             BlocProvider.of<ListWeatherBloc>(context)
-                .add(ListWeatherSuccessEvent(state.cityName));
+                .add(ListWeatherEndedWithSuccess(state.cityName));
 
             Navigator.of(context).pushNamed(Weather3Days.routeName);
           },

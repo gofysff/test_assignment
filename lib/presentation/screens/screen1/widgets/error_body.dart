@@ -49,7 +49,7 @@ class _RestartButton extends StatelessWidget {
             onPressed: () {
               controller.clear();
               BlocProvider.of<CityWeatherBloc>(context)
-                  .add(CityWeatherInitialEvent());
+                  .add(CityWeatherInitialised());
             },
             child: Text(
               restartButtonText,

@@ -66,7 +66,7 @@ class _ConfirmButton extends StatelessWidget {
               final text = controller.text.trim();
               controller.clear();
               BlocProvider.of<CityWeatherBloc>(context).add(
-                CityWeatherChangeEvent(text),
+                CityWeatherChanged(text),
               );
             },
             child: Text(

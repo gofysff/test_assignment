@@ -14,7 +14,7 @@ class ChangeSortingTypeButton extends StatelessWidget {
     return TextButton(
       onPressed: () {
         BlocProvider.of<ListWeatherBloc>(context).add(
-          ListWeatherChangeSortEvent(),
+          ListWeatherChangedSortingType(),
         );
       },
       child: SizedBox(

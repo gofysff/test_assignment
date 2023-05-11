@@ -4,10 +4,10 @@ part of 'list_weather_bloc.dart';
 abstract class ListWeatherEvent extends Equatable {}
 
 /// used when [CityWeatherBloc] state is success
-class ListWeatherSuccessEvent extends ListWeatherEvent {
+class ListWeatherEndedWithSuccess extends ListWeatherEvent {
   final String city;
 
-  ListWeatherSuccessEvent(
+  ListWeatherEndedWithSuccess(
     this.city,
   );
 
@@ -16,13 +16,13 @@ class ListWeatherSuccessEvent extends ListWeatherEvent {
 }
 
 /// used when [CityWeatherBloc] state isn't success
-class ListWeatherInitialEvent extends ListWeatherEvent {
+class ListWeatherInitialised extends ListWeatherEvent {
   @override
   List<Object?> get props => [];
 }
 
 /// used when  we want to sort list of weather or stop sorting
-class ListWeatherChangeSortEvent extends ListWeatherEvent {
+class ListWeatherChangedSortingType extends ListWeatherEvent {
   @override
   List<Object?> get props => [];
 }

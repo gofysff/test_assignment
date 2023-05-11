@@ -12,10 +12,8 @@ class ToPreviousScreenButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        BlocProvider.of<CityWeatherBloc>(context)
-            .add(CityWeatherInitialEvent());
-        BlocProvider.of<ListWeatherBloc>(context)
-            .add(ListWeatherInitialEvent());
+        BlocProvider.of<CityWeatherBloc>(context).add(CityWeatherInitialised());
+        BlocProvider.of<ListWeatherBloc>(context).add(ListWeatherInitialised());
         Navigator.of(context).pop();
       },
       icon: const Icon(Icons.arrow_back),
