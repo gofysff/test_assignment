@@ -24,14 +24,14 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   void _onInitialEvent(Emitter<CityWeatherState> emit) {
     emit(
       state.copyWith(
-          city: '', status: CityWeatherStatus.initial, weather: null),
+          cityName: '', status: CityWeatherStatus.initial, weather: null),
     );
   }
 
   Future<void> _onCityEventChange(
       Emitter<CityWeatherState> emit, CityWeatherChangeEvent event) async {
     emit(
-      state.copyWith(city: event.city, status: CityWeatherStatus.loading),
+      state.copyWith(cityName: event.city, status: CityWeatherStatus.loading),
     );
 
     try {
@@ -39,7 +39,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
           await _weatherRepository.getWeatherByCityName(event.city);
       emit(
         state.copyWith(
-            city: event.city,
+            cityName: event.city,
             status: CityWeatherStatus.success,
             weather: weather),
       );
@@ -47,7 +47,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
       print('we catch error');
       print(e);
       emit(
-        state.copyWith(city: event.city, status: CityWeatherStatus.error),
+        state.copyWith(cityName: event.city, status: CityWeatherStatus.error),
       );
     }
   }

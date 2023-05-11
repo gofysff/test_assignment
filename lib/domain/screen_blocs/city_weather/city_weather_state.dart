@@ -12,25 +12,25 @@ extension CityStatusBoolX on CityWeatherStatus {
 
 class CityWeatherState extends Equatable {
   const CityWeatherState({
-    this.city = '',
+    this.cityName = '',
     this.status = CityWeatherStatus.initial,
     this.weather,
   });
 
-  final String city;
+  final String cityName;
   final CityWeatherStatus status;
   final Weather? weather;
 
   @override
-  List<Object?> get props => [city, status];
+  List<Object?> get props => [cityName, status];
 
   CityWeatherState copyWith({
-    String? city,
+    String? cityName,
     CityWeatherStatus? status,
     Weather? weather,
   }) {
     return CityWeatherState(
-      city: city ?? this.city,
+      cityName: cityName ?? this.cityName,
       status: status ?? this.status,
       weather: weather,
     );

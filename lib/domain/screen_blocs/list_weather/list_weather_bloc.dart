@@ -13,8 +13,10 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
   final WeatherRepository _weatherRepository;
 
   ListWeatherBloc(this._weatherRepository)
-      : super(ListWeatherInitial(
-            weathers: const [], status: ListWeatherStatus.initial)) {
+      : super(
+          ListWeatherInitial(
+              weathers: const [], status: ListWeatherStatus.initial),
+        ) {
     on<ListWeatherEvent>(
       (event, emit) async {
         if (event is ListWeatherInitialEvent) {
@@ -40,7 +42,6 @@ class ListWeatherBloc extends Bloc<ListWeatherEvent, ListWeatherState> {
     try {
       List<Weather> weathers =
           await _weatherRepository.getWeatherByCityNameFor3Days(event.city);
-
       emit(
         ListWeatherState(
           status: ListWeatherStatus.success,

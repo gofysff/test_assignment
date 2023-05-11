@@ -75,7 +75,7 @@ class DetailWeatherInfo extends StatelessWidget {
         builder: (context, state) {
           return Center(
             child: Text(
-              state.city,
+              state.cityName,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           );

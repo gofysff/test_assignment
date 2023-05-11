@@ -9,6 +9,7 @@ abstract class CityWeatherEvent extends Equatable {
 
 class CityWeatherInitialEvent extends CityWeatherEvent {}
 
+/// event for changing city name
 class CityWeatherChangeEvent extends CityWeatherEvent {
   CityWeatherChangeEvent(this.city);
 

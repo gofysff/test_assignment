@@ -13,7 +13,7 @@ class Weather3Days extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final city = BlocProvider.of<CityWeatherBloc>(context).state.city;
+    final city = BlocProvider.of<CityWeatherBloc>(context).state.cityName;
     return Scaffold(
       appBar: _appBar(context),
       body: Padding(
