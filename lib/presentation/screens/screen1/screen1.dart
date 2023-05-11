@@ -1,10 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_assignment/domain/screen_blocs/city_weather/city_weather_bloc.dart';
-
-import '../../styling/colors.dart';
 import '../screen2/screen2.dart';
 import 'res.dart';
+import 'widgets/error_body.dart';
+import 'widgets/ok_body.dart';
 
 class SearchCity extends StatefulWidget {
   const SearchCity({super.key});
@@ -17,7 +18,6 @@ class SearchCity extends StatefulWidget {
 class _SearchCityState extends State<SearchCity> {
   final _controller = TextEditingController();
   late double _heightScreen;
-  GlobalKey<ScaffoldState> firstScreenKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
@@ -28,7 +28,6 @@ class _SearchCityState extends State<SearchCity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: firstScreenKey,
       appBar: AppBar(
         title: Center(
           child: Text(
@@ -39,25 +38,7 @@ class _SearchCityState extends State<SearchCity> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocConsumer<CityWeatherBloc, CityWeatherState>(
-          listener: (context, state) {
-            if (state.status.isError) {
-              _showSnackBarWihError(bottomMargin: _heightScreen / 2);
-            } else if (state.status.isSuccess) {
-              Navigator.of(context).pushNamed(DetailWeatherInfo.routeName);
-            }
-          },
-          builder: (context, state) {
-            if (state.status.isInitial) {
-              return okBody;
-            } else if (state.status.isError) {
-              return errorBody;
-            } else if (state.status.isLoading || state.status.isSuccess) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return const SizedBox();
-          },
-        ),
+        child: _body,
       ),
     );
   }
@@ -78,73 +59,27 @@ class _SearchCityState extends State<SearchCity> {
     );
   }
 
-  Widget get okBody => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [textField, confirmButton],
+  Widget get _body => BlocConsumer<CityWeatherBloc, CityWeatherState>(
+        listener: (context, state) {
+          if (state.status.isError) {
+            _showSnackBarWihError(bottomMargin: _heightScreen / 2);
+          } else if (state.status.isSuccess) {
+            Navigator.of(context).pushNamed(DetailWeatherInfo.routeName);
+          }
+        },
+        builder: (context, state) {
+          if (state.status.isInitial) {
+            return _okBody;
+          } else if (state.status.isError) {
+            return _errorBody;
+          } else if (state.status.isLoading || state.status.isSuccess) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return const SizedBox();
+        },
       );
 
-  Widget get errorBody => Center(
-        child: Column(
-          children: [
-            const Text(
-              errorText,
-              style: TextStyle(color: textPrimaryColor, fontSize: 50),
-            ),
-            const SizedBox(height: 30),
-            restartButton,
-          ],
-        ),
-      );
+  Widget get _okBody => OkBody(controller: _controller);
 
-  Widget get textField => TextField(
-        controller: _controller,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: hintText,
-        ),
-      );
-
-  Widget get confirmButton => SizedBox(
-        width: double.infinity,
-        height: 50,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: backgroundElevatedButtonsColor,
-          ),
-          onPressed: () {
-            // TODO: add validation
-            final text = _controller.text.trim();
-            _controller.clear();
-            BlocProvider.of<CityWeatherBloc>(context).add(
-              CityWeatherChangeEvent(text),
-            );
-          },
-          child: Text(
-            confirmButtonText,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      );
-
-  Widget get restartButton => SizedBox(
-        width: double.infinity,
-        height: 50,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: backgroundElevatedButtonsColor,
-          ),
-          onPressed: () {
-            // call again to bloc
-            //tODO: complete this
-            _controller.clear();
-
-            BlocProvider.of<CityWeatherBloc>(context)
-                .add(CityWeatherInitialEvent());
-          },
-          child: Text(
-            restartButtonText,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      );
+  Widget get _errorBody => ErrorBody(controller: _controller);
 }
