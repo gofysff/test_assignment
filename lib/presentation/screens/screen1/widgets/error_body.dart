@@ -23,13 +23,22 @@ class ErrorBody extends StatelessWidget {
             style: TextStyle(color: textPrimaryColor, fontSize: 50),
           ),
           const SizedBox(height: 30),
-          restartButton,
+          _RestartButton(controller: controller),
         ],
       ),
     );
   }
+}
 
-  Widget get restartButton => SizedBox(
+class _RestartButton extends StatelessWidget {
+  const _RestartButton({
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
         width: double.infinity,
         height: 50,
         child: Builder(builder: (context) {

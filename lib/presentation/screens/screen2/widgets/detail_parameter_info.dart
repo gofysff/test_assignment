@@ -31,24 +31,40 @@ class DetailParameterInfo extends StatelessWidget {
         const SizedBox(
           width: 15,
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              detailLabel,
-              style: const TextStyle(
-                color: textPrimaryColor,
-                fontSize: 20,
-              ),
-            ),
-            Text(
-              detailData,
-              style: const TextStyle(
-                  color: textMiddleColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
-            )
-          ],
+        _Details(detailLabel: detailLabel, detailData: detailData)
+      ],
+    );
+  }
+}
+
+class _Details extends StatelessWidget {
+  const _Details({
+    Key? key,
+    required this.detailLabel,
+    required this.detailData,
+  }) : super(key: key);
+
+  final String detailLabel;
+  final String detailData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          detailLabel,
+          style: const TextStyle(
+            color: textPrimaryColor,
+            fontSize: 20,
+          ),
+        ),
+        Text(
+          detailData,
+          style: const TextStyle(
+              color: textMiddleColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w600),
         )
       ],
     );

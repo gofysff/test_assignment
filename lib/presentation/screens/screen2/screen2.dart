@@ -23,27 +23,37 @@ class DetailWeatherInfo extends StatelessWidget {
           leading: const ToPreviousScreenButton(),
           actions: const [ToDetailInfoButton()],
         ),
-        body: _body(),
+        body: const _Body(),
       ),
     );
   }
+}
 
-  ListView _body() {
+class _Body extends StatelessWidget {
+  const _Body();
+
+  @override
+  Widget build(BuildContext context) {
     return ListView(
-      children: [
-        const SizedBox(
+      children: const [
+        SizedBox(
           height: 50,
         ),
-        _cityName,
-        _weatherEmoji,
-        _currentTemperature,
-        const SizedBox(height: 150),
-        const DetailedWeatherInfoCard(height: 230)
+        _CityName(),
+        _WeatherEmoji(),
+        _CurrentTemperature(),
+        SizedBox(height: 150),
+        DetailedWeatherInfoCard(height: 230)
       ],
     );
   }
+}
 
-  BlocBuilder<CityWeatherBloc, CityWeatherState> get _currentTemperature =>
+class _CurrentTemperature extends StatelessWidget {
+  const _CurrentTemperature();
+
+  @override
+  Widget build(BuildContext context) =>
       BlocBuilder<CityWeatherBloc, CityWeatherState>(
         builder: (context, state) {
           return Center(
@@ -54,8 +64,13 @@ class DetailWeatherInfo extends StatelessWidget {
           );
         },
       );
+}
 
-  SizedBox get _weatherEmoji => SizedBox(
+class _WeatherEmoji extends StatelessWidget {
+  const _WeatherEmoji();
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
         height: 200,
         child: Center(
           child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
@@ -69,8 +84,13 @@ class DetailWeatherInfo extends StatelessWidget {
           ),
         ),
       );
+}
 
-  BlocBuilder<CityWeatherBloc, CityWeatherState> get _cityName =>
+class _CityName extends StatelessWidget {
+  const _CityName();
+
+  @override
+  Widget build(BuildContext context) =>
       BlocBuilder<CityWeatherBloc, CityWeatherState>(
         builder: (context, state) {
           return Center(

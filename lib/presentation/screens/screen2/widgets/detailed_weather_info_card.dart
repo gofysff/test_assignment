@@ -17,16 +17,54 @@ class DetailedWeatherInfoCard extends StatelessWidget {
       height: height,
       child: Card(
         child: Column(
-          children: [
-            firstRowCard,
-            secondRowCard,
+          children: const [
+            _FirstRowCard(),
+            _SecondRowCard(),
           ],
         ),
       ),
     );
   }
+}
 
-  Expanded get firstRowCard => Expanded(
+class _SecondRowCard extends StatelessWidget {
+  const _SecondRowCard();
+
+  @override
+  Widget build(BuildContext context) => Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            BlocBuilder<CityWeatherBloc, CityWeatherState>(
+              builder: (context, state) {
+                return DetailParameterInfo(
+                  iconData: WeatherIcons.humidity,
+                  detailLabel: detailParameterInfo_2_1Label,
+                  detailData: '${state.weather?.humidity}%',
+                );
+              },
+            ),
+            BlocBuilder<CityWeatherBloc, CityWeatherState>(
+              builder: (context, state) {
+                return DetailParameterInfo(
+                  iconData: WeatherIcons.windy,
+                  detailLabel: detailParameterInfo_2_2Label,
+                  detailData:
+                      '${state.weather?.windSpeed} $unitOfWindMeasurement',
+                );
+              },
+            ),
+          ],
+        ),
+      );
+}
+
+class _FirstRowCard extends StatelessWidget {
+  const _FirstRowCard();
+
+  @override
+  Widget build(BuildContext context) => Expanded(
         child: Row(
           children: [
             Expanded(
@@ -56,34 +94,6 @@ class DetailedWeatherInfoCard extends StatelessWidget {
                   },
                 ),
               ),
-            ),
-          ],
-        ),
-      );
-
-  Expanded get secondRowCard => Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            BlocBuilder<CityWeatherBloc, CityWeatherState>(
-              builder: (context, state) {
-                return DetailParameterInfo(
-                  iconData: WeatherIcons.humidity,
-                  detailLabel: detailParameterInfo_2_1Label,
-                  detailData: '${state.weather?.humidity}%',
-                );
-              },
-            ),
-            BlocBuilder<CityWeatherBloc, CityWeatherState>(
-              builder: (context, state) {
-                return DetailParameterInfo(
-                  iconData: WeatherIcons.windy,
-                  detailLabel: detailParameterInfo_2_2Label,
-                  detailData:
-                      '${state.weather?.windSpeed} $unitOfWindMeasurement',
-                );
-              },
             ),
           ],
         ),

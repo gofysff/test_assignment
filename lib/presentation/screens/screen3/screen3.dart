@@ -40,17 +40,26 @@ class Weather3Days extends StatelessWidget {
         const SizedBox(height: 30),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: _labelText(city),
+          child: _LabelText(city: city),
         ),
         const SizedBox(height: 30),
         const ChangeSortingTypeButton(),
         const SizedBox(height: 60),
-        _sortedList()
+        const _SortedWeatherDataList()
       ],
     );
   }
+}
 
-  Center _labelText(String city) {
+class _LabelText extends StatelessWidget {
+  const _LabelText({
+    required this.city,
+  });
+
+  final String city;
+
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: BlocBuilder<ListWeatherBloc, ListWeatherState>(
         builder: (context, stateList) {
@@ -69,8 +78,13 @@ class Weather3Days extends StatelessWidget {
       ),
     );
   }
+}
 
-  BlocBuilder<ListWeatherBloc, ListWeatherState> _sortedList() {
+class _SortedWeatherDataList extends StatelessWidget {
+  const _SortedWeatherDataList();
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<ListWeatherBloc, ListWeatherState>(
       builder: (context, state) {
         if (state.status.isInitial || state.status.isLoading) {

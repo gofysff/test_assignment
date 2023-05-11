@@ -25,13 +25,18 @@ class ChangeSortingTypeButton extends StatelessWidget {
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: _buttonText(),
+          child: const _ButtonText(),
         ),
       ),
     );
   }
+}
 
-  BlocBuilder<ListWeatherBloc, ListWeatherState> _buttonText() {
+class _ButtonText extends StatelessWidget {
+  const _ButtonText();
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<ListWeatherBloc, ListWeatherState>(
       builder: (context, state) {
         if (state.isSorted) {

@@ -69,17 +69,13 @@ class _SearchCityState extends State<SearchCity> {
         },
         builder: (context, state) {
           if (state.status.isInitial) {
-            return _okBody;
+            return OkBody(controller: _controller);
           } else if (state.status.isError) {
-            return _errorBody;
+            return ErrorBody(controller: _controller);
           } else if (state.status.isLoading || state.status.isSuccess) {
             return const Center(child: CircularProgressIndicator());
           }
           return const SizedBox();
         },
       );
-
-  Widget get _okBody => OkBody(controller: _controller);
-
-  Widget get _errorBody => ErrorBody(controller: _controller);
 }

@@ -20,19 +20,40 @@ class OkBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [textField, confirmButton],
+      children: [
+        _CustomTextField(controller: controller),
+        _ConfirmButton(controller: controller)
+      ],
     );
   }
+}
 
-  Widget get textField => TextField(
+class _CustomTextField extends StatelessWidget {
+  const _CustomTextField({
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) => TextField(
         controller: controller,
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
           hintText: hintText,
         ),
       );
+}
 
-  Widget get confirmButton => SizedBox(
+class _ConfirmButton extends StatelessWidget {
+  const _ConfirmButton({
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
         width: double.infinity,
         height: 50,
         child: Builder(builder: (context) {
