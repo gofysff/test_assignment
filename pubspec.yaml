@@ -9,6 +9,7 @@ environment:
 dependencies:
   bloc: ^8.1.1
   bloc_test: ^9.1.1
+  dartdoc: ^6.2.2
   dio: ^5.1.1
   equatable: ^2.0.5
   flutter:
