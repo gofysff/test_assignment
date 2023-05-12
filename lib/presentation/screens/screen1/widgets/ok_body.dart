@@ -45,7 +45,7 @@ class _CustomTextField extends StatelessWidget {
       );
 }
 
-class _ConfirmButton extends StatelessWidget {
+class _ConfirmButton extends StatefulWidget {
   const _ConfirmButton({
     required this.controller,
   });
@@ -53,27 +53,30 @@ class _ConfirmButton extends StatelessWidget {
   final TextEditingController controller;
 
   @override
+  State<_ConfirmButton> createState() => _ConfirmButtonState();
+}
+
+class _ConfirmButtonState extends State<_ConfirmButton> {
+  @override
   Widget build(BuildContext context) => SizedBox(
         width: double.infinity,
         height: 50,
-        child: Builder(builder: (context) {
-          return ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundElevatedButtonsColor,
-            ),
-            onPressed: () {
-              // TODO: add validation
-              final text = controller.text.trim();
-              controller.clear();
-              BlocProvider.of<CityWeatherBloc>(context).add(
-                CityWeatherChanged(text),
-              );
-            },
-            child: Text(
-              confirmButtonText,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          );
-        }),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundElevatedButtonsColor,
+          ),
+          onPressed: () {
+            // TODO: add validation
+            final text = widget.controller.text.trim();
+            widget.controller.clear();
+            BlocProvider.of<CityWeatherBloc>(context).add(
+              CityWeatherChanged(text),
+            );
+          },
+          child: Text(
+            confirmButtonText,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
       );
 }

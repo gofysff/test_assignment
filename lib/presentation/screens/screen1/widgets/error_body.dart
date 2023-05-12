@@ -30,7 +30,7 @@ class ErrorBody extends StatelessWidget {
   }
 }
 
-class _RestartButton extends StatelessWidget {
+class _RestartButton extends StatefulWidget {
   const _RestartButton({
     required this.controller,
   });
@@ -38,24 +38,27 @@ class _RestartButton extends StatelessWidget {
   final TextEditingController controller;
 
   @override
+  State<_RestartButton> createState() => _RestartButtonState();
+}
+
+class _RestartButtonState extends State<_RestartButton> {
+  @override
   Widget build(BuildContext context) => SizedBox(
         width: double.infinity,
         height: 50,
-        child: Builder(builder: (context) {
-          return ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundElevatedButtonsColor,
-            ),
-            onPressed: () {
-              controller.clear();
-              BlocProvider.of<CityWeatherBloc>(context)
-                  .add(CityWeatherInitialised());
-            },
-            child: Text(
-              restartButtonText,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          );
-        }),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundElevatedButtonsColor,
+          ),
+          onPressed: () {
+            widget.controller.clear();
+            BlocProvider.of<CityWeatherBloc>(context)
+                .add(CityWeatherInitialised());
+          },
+          child: Text(
+            restartButtonText,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
       );
 }
