@@ -79,4 +79,4 @@
 
 ## Документация
 
-[Документация]('doc/api/search.html')
+[Документация](doc/api/search.html)
